@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	poker "learn-go-with-tests"
 	"log"
-	"net/http"
+	"os"
 )
 
 const dbFileName = "game.db.json"
@@ -16,9 +17,8 @@ func main() {
 
 	defer close()
 
-	server := poker.NewPlayerServer(store)
+	fmt.Println("Let's play poker")
+	fmt.Println("Type {Name} wins to record a win")
 
-	if err := http.ListenAndServe(":3000", server); err != nil {
-		log.Fatalf("could not listen on port 3000 %v", err)
-	}
+	poker.NewCLI(store, os.Stdin).PlayPoker()
 }
